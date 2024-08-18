@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: tempo-config
+  namespace: monitoring
 data:
   tempo.yaml: |
     server:
@@ -17,13 +18,12 @@ data:
         local:
           path: /tmp/tempo/blocks
 
-
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tempo
+  namespace: monitoring
 spec:
   replicas: 1
   selector:
@@ -58,7 +58,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-tempo
+  name: tempo
+  namespace: monitoring
 spec:
   type: NodePort
   ports:

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-config
+  namespace: monitoring
 data:
   prometheus.yml: |
     global:
@@ -13,7 +14,7 @@ data:
         metrics_path: '/actuator/prometheus'
         scrape_interval: 5s
         static_configs:
-          - targets: ['app1-service:8081']
+          - targets: ['app1-service.apps:8081']
             labels:
               application: 'App1'
 
@@ -21,19 +22,16 @@ data:
         metrics_path: '/actuator/prometheus'
         scrape_interval: 5s
         static_configs:
-          - targets: ['app2-service:8080']
+          - targets: ['app2-service.apps:8080']
             labels:
               application: 'App2'
-      
-              
-              
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
+  namespace: monitoring
 spec:
   replicas: 1
   selector:
@@ -62,6 +60,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
+  namespace: monitoring
 spec:
   type: NodePort
   ports:

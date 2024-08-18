@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loki
+  namespace: monitoring
 spec:
   replicas: 1
   selector:
@@ -23,7 +24,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-loki
+  name: loki
+  namespace: monitoring
 spec:
   type: NodePort
   ports:
