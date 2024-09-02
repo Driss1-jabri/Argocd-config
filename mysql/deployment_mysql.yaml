@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       app: mysql
+  serviceName: mysql
   template:
     metadata:
       labels:
@@ -23,3 +24,49 @@ spec:
               value: monitoringAPPDb
           ports:
             - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+        - name: mysql-exporter
+          image: prom/mysqld-exporter
+          ports:
+            - name: tcp
+              protocol: TCP
+              containerPort: 9104
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: DATA_SOURCE_NAME
+              value: "root:root@(mysql:3306)/"
+            - name: collect.global_status
+              value: 'true'
+            - name: collect.info_schema.innodb_metrics
+              value: 'true'
+            - name: collect.auto_increment.columns
+              value: 'true'
+            - name: collect.info_schema.processlist
+              value: 'true'
+            - name: collect.binlog_size
+              value: 'true'
+            - name: collect.info_schema.tablestats
+              value: 'true'
+            - name: collect.global_variables
+              value: 'true'
+            - name: collect.info_schema.query_response_time
+              value: 'true'
+            - name: collect.info_schema.userstats
+              value: 'true'
+            - name: collect.info_schema.tables
+              value: 'true'
+            - name: collect.perf_schema.tablelocks
+              value: 'true'
+            - name: collect.perf_schema.file_events
+              value: 'true'
+            - name: collect.perf_schema.eventswaits
+              value: 'true'
+            - name: collect.perf_schema.indexiowaits
+              value: 'true'
+            - name: collect.perf_schema.tableiowaits
+              value: 'true'
+     

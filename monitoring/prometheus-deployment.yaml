@@ -25,6 +25,11 @@ data:
           - targets: ['app2-service.apps:8080']
             labels:
               application: 'App2'
+              
+      - job_name: "mysqld_exporter"
+        scrape_interval: 15s
+        static_configs:
+          - targets: ['mysql:9104']
 
 ---
 apiVersion: apps/v1
