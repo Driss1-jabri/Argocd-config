@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -8,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  serviceName: mysql-service
   template:
     metadata:
       labels:
