@@ -4,7 +4,7 @@ metadata:
   name: app1-service
   namespace: apps
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: app1
   ports:
