@@ -5,7 +5,7 @@ metadata:
   namespace: apps
 
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: app2
   ports:
